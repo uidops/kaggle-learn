@@ -8,8 +8,9 @@ Notes and worked solutions for [Kaggle's *Intro to Pandas* micro-course](https:/
 | --- | --- | --- |
 | 1 | [Creating, Reading and Writing](https://www.kaggle.com/code/residentmario/creating-reading-and-writing) | `01-introduction.ipynb`, `01-exercise.ipynb` (5 questions) |
 | 2 | [Indexing, Selecting & Assigning](https://www.kaggle.com/code/residentmario/indexing-selecting-assigning) | `02-index.ipynb`, `02-exercise.ipynb` (9 questions) |
+| 3 | [Summary Functions and Maps](https://www.kaggle.com/code/residentmario/summary-functions-and-maps) | `03-maps.ipynb`, `03-exercise.ipynb` (7 questions) |
 
-Pattern per section: `NN-index`/`NN-introduction` is the lesson walkthrough, `NN-exercise` is the exercise with answers filled in.
+Pattern per section: the `NN-*` lesson notebook is the walkthrough, `NN-exercise` is the exercise with answers filled in.
 
 | File | What it is |
 | --- | --- |
@@ -18,7 +19,9 @@ Pattern per section: `NN-index`/`NN-introduction` is the lesson walkthrough, `NN
 | `cows_and_goats.csv` | Output of exercise 1 question 5 — `animals.to_csv(...)` |
 | `02-index.ipynb` | Lesson walkthrough — attribute access, `[]`, `iloc`/`loc`, slicing, `set_index`, boolean masks, `isin`/`isnull`, column assignment |
 | `02-exercise.ipynb` | Exercise 2 solutions, questions 1–9 (selection, label vs. position, conditional filters) |
-| `winemag-data-130k-v2.csv` | Wine reviews used by sections 1–2 — 129,971 rows, 14 cols (13 after `index_col=0`) |
+| `03-maps.ipynb` | Lesson walkthrough — `describe()`, `mean()`, `unique()`, `value_counts()`, `map()`, `apply(axis="columns")`, vectorised operators |
+| `03-exercise.ipynb` | Exercise 3 solutions, questions 1–7 (median, unique countries, counts, centering, best bargain, descriptor counts, star ratings) |
+| `winemag-data-130k-v2.csv` | Wine reviews used by sections 1–3 — 129,971 rows, 14 cols (13 after `index_col=0`) |
 | `winemag-data_first150k.csv` | Wine reviews used by exercise 1 question 4 — 150,930 rows |
 
 Both CSVs come from Kaggle's [Wine Reviews](https://www.kaggle.com/zynicide/wine-reviews) dataset and are **gitignored** (≈50 MB each) — download them from Kaggle into `pandas-learn/` if they're missing.
@@ -55,6 +58,13 @@ The venv already has pandas (3.0.6), jupyterlab, and nbconvert. To re-run a note
 - **Conditional selection** — a boolean Series (`reviews.country == "Germany"`) passed into `loc`, combined with `&` / `|`, plus `isin([...])` and `isnull()`/`notnull()`
 - **Assigning** — new columns from a constant (`df["critic"] = "everyone"`) or an iterable (`range(...)`)
 
+### 3. Summary Functions and Maps
+
+- **Summary functions** — `describe()` (type-aware), `mean()`, `median()`, `unique()`, `value_counts()` for a quick read on a column
+- **`map()`** — element-wise transform of a Series: `reviews.points.map(lambda p: p - mean)`; returns a new Series, the original is untouched
+- **`apply()`** — the same idea over a whole DataFrame; `axis="columns"` passes each row to your function, `axis="index"` passes each column instead
+- **Vectorised operators** — `reviews.price - reviews.price.mean()` and `reviews.country + " - " + reviews.region_1` beat `map()`/`apply()` because pandas broadcasts; use `map()`/`apply()` when you need conditional logic
+
 ## Next
 
-Exercise forks on Kaggle: [section 1](https://www.kaggle.com/kernels/fork/587970), [section 2](https://www.kaggle.com/kernels/fork/587910).
+Exercise forks on Kaggle: [section 1](https://www.kaggle.com/kernels/fork/587970), [section 2](https://www.kaggle.com/kernels/fork/587910), [section 3](https://www.kaggle.com/kernels/fork/595524).
