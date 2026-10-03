@@ -1,0 +1,4 @@
+.idea/
+.venv/
+pandas-learn/winemag-data-130k-v2.csv
+pandas-learn/winemag-data_first150k.csv
