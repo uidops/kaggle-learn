@@ -11,6 +11,7 @@ Notes and worked solutions for [Kaggle's *Intro to Pandas* micro-course](https:/
 | 3 | [Summary Functions and Maps](https://www.kaggle.com/code/residentmario/summary-functions-and-maps) | `03-maps.ipynb`, `03-exercise.ipynb` (7 questions) |
 | 4 | [Grouping and Sorting](https://www.kaggle.com/code/residentmario/grouping-and-sorting) | `04-grouping.ipynb`, `04-exercise.ipynb` (6 questions) |
 | 5 | [Data Types and Missing Values](https://www.kaggle.com/code/residentmario/data-types-and-missing-values) | `05-datatypes.ipynb`, `05-exercise.ipynb` (4 questions) |
+| 6 | [Renaming and Combining](https://www.kaggle.com/code/residentmario/renaming-and-combining) | `06-renaming.ipynb`, `06-exercise.ipynb` (4 questions) — *course complete* |
 
 Pattern per section: the `NN-*` lesson notebook is the walkthrough, `NN-exercise` is the exercise with answers filled in.
 
@@ -27,10 +28,21 @@ Pattern per section: the `NN-*` lesson notebook is the walkthrough, `NN-exercise
 | `04-exercise.ipynb` | Exercise 4 solutions, questions 1–6 (reviewers written, best rating per price, price extremes per variety, reviewer means, `{country, variety}` MultiIndex counts) |
 | `05-datatypes.ipynb` | Lesson walkthrough — `dtype`/`dtypes`, `astype()`, index dtype, `pd.isnull()`, `fillna()`, `replace()` |
 | `05-exercise.ipynb` | Exercise 5 solutions, questions 1–4 (points dtype, points as strings, missing prices, `region_1` counts with `fillna`) |
-| `winemag-data-130k-v2.csv` | Wine reviews used by sections 1–5 — 129,971 rows, 14 cols (13 after `index_col=0`) |
+| `06-renaming.ipynb` | Lesson walkthrough — `rename(columns=)`, `rename(index=)`, `rename_axis()`, `pd.concat()`, `set_index()` + `join()` with `lsuffix`/`rsuffix` |
+| `06-exercise.ipynb` | Exercise 6 solutions, questions 1–4 (rename locale columns, index name, Reddit products via `concat`, powerlifting meets + lifters via `join`) |
+| `winemag-data-130k-v2.csv` | Wine reviews used by sections 1–6 — 129,971 rows, 14 cols (13 after `index_col=0`) |
 | `winemag-data_first150k.csv` | Wine reviews used by exercise 1 question 4 — 150,930 rows |
 
-Both CSVs come from Kaggle's [Wine Reviews](https://www.kaggle.com/zynicide/wine-reviews) dataset and are **gitignored** (≈50 MB each) — download them from Kaggle into `pandas-learn/` if they're missing.
+Dataset sources — all from Kaggle:
+
+| Used by | Files | Committed? |
+| --- | --- | --- |
+| Sections 1–6 | `winemag-data-130k-v2.csv`, `winemag-data_first150k.csv` (≈50 MB each) | no — gitignored |
+| Section 6 lesson | `CAvideos.csv`, `GBvideos.csv` — [Trending YouTube](https://www.kaggle.com/datasurvivor/trending-youtube-video-statistics) | no — gitignored (61 MB / 51 MB) |
+| Section 6 exercise Q3 | `gaming.csv`, `movies.csv` — [Things on Reddit](https://www.kaggle.com/residentmario/things-on-reddit) | yes (~150 KB combined) |
+| Section 6 exercise Q4 | `meets.csv`, `openpowerlifting.csv` — [Powerlifting Database](https://www.kaggle.com/open-powerlifting/powerlifting-database) | `meets.csv` yes (609 KB); `openpowerlifting.csv` no — gitignored (29 MB) |
+
+Gitignored files must be downloaded from Kaggle into `pandas-learn/` by hand; the notebooks won't run without them.
 
 ## Running the notebooks
 
@@ -87,6 +99,16 @@ The venv already has pandas (3.0.6), jupyterlab, and nbconvert. To re-run a note
 
 > **pandas 3.0 note:** the tutorial says string columns come out as `object`, but pandas 3.x defaults strings to the dedicated `str` dtype (`StringDtype`). So `reviews.dtypes` shows `country str` rather than `country object`, and `astype("str")` returns `dtype: str` — same behavior, newer type name.
 
+### 6. Renaming and Combining
+
+- **`rename()`** — relabel columns or index entries without touching the data: `rename(columns={"points": "score"})`, `rename(index={0: "firstEntry"})`
+- **`rename_axis()`** — changes the *name* of the index/axis itself (`"wines"` for rows, `"fields"` for columns), not the labels; distinct from `set_index()`, which changes which column is the index
+- **`pd.concat()`** — stack DataFrames end to end; the default `axis=0` just appends rows. Simplest combine when the two frames share a schema
+- **`join()`** — align on a shared key: `set_index("MeetID")` on both sides, then `left.join(right)`, passing `lsuffix`/`rsuffix` when column names collide
+- Picking between them: `concat` when the frames are the *same kind* of record, `join` when they describe *different things* keyed together
+
 ## Next
 
-Exercise forks on Kaggle: [section 1](https://www.kaggle.com/kernels/fork/587970), [section 2](https://www.kaggle.com/kernels/fork/587910), [section 3](https://www.kaggle.com/kernels/fork/595524), [section 4](https://www.kaggle.com/kernels/fork/598715), [section 5](https://www.kaggle.com/kernels/fork/598826).
+Exercise forks on Kaggle: [section 1](https://www.kaggle.com/kernels/fork/587970), [section 2](https://www.kaggle.com/kernels/fork/587910), [section 3](https://www.kaggle.com/kernels/fork/595524), [section 4](https://www.kaggle.com/kernels/fork/598715), [section 5](https://www.kaggle.com/kernels/fork/598826), [section 6](https://www.kaggle.com/kernels/fork/638064).
+
+That's the whole micro-course. Next from here: [Geospatial Analysis](https://www.kaggle.com/learn/geospatial-analysis), [Data Cleaning](https://www.kaggle.com/learn/data-cleaning), or [Intermediate Machine Learning](https://www.kaggle.com/learn/intermediate-machine-learning).
