@@ -7,10 +7,10 @@ Working notes and exercises for the first section of Kaggle's *Intro to Pandas* 
 
 | File | What it is |
 | --- | --- |
-| `introduction.ipynb` | Lesson walkthrough — DataFrame/Series construction, `index=`, `pd.read_csv()`, `shape`, `head()`, `index_col` |
-| `solution-1.ipynb` | Exercise 1 solutions (5 questions: `fruits`, `fruit_sales`, `ingredients`, `reviews`, `animals`) |
+| `01-introduction.ipynb` | Lesson walkthrough — DataFrame/Series construction, `index=`, `pd.read_csv()`, `shape`, `head()`, `index_col` |
+| `01-exercise.ipynb` | Exercise 1 solutions (5 questions: `fruits`, `fruit_sales`, `ingredients`, `reviews`, `animals`) |
 | `cows_and_goats.csv` | Output of question 5 — `animals.to_csv(...)` |
-| `winemag-data-130k-v2.csv` | Wine reviews dataset used by `introduction.ipynb` — 129,971 rows, 14 cols (13 after `index_col=0`) |
+| `winemag-data-130k-v2.csv` | Wine reviews dataset used by `01-introduction.ipynb` — 129,971 rows, 14 cols (13 after `index_col=0`) |
 | `winemag-data_first150k.csv` | Wine reviews dataset used by exercise 1, question 4 — 150,930 rows |
 
 Both CSVs come from Kaggle's [Wine Reviews](https://www.kaggle.com/zynicide/wine-reviews) dataset.
