@@ -10,6 +10,7 @@ Notes and worked solutions for [Kaggle's *Intro to Pandas* micro-course](https:/
 | 2 | [Indexing, Selecting & Assigning](https://www.kaggle.com/code/residentmario/indexing-selecting-assigning) | `02-index.ipynb`, `02-exercise.ipynb` (9 questions) |
 | 3 | [Summary Functions and Maps](https://www.kaggle.com/code/residentmario/summary-functions-and-maps) | `03-maps.ipynb`, `03-exercise.ipynb` (7 questions) |
 | 4 | [Grouping and Sorting](https://www.kaggle.com/code/residentmario/grouping-and-sorting) | `04-grouping.ipynb`, `04-exercise.ipynb` (6 questions) |
+| 5 | [Data Types and Missing Values](https://www.kaggle.com/code/residentmario/data-types-and-missing-values) | `05-datatypes.ipynb`, `05-exercise.ipynb` (4 questions) |
 
 Pattern per section: the `NN-*` lesson notebook is the walkthrough, `NN-exercise` is the exercise with answers filled in.
 
@@ -24,7 +25,9 @@ Pattern per section: the `NN-*` lesson notebook is the walkthrough, `NN-exercise
 | `03-exercise.ipynb` | Exercise 3 solutions, questions 1–7 (median, unique countries, counts, centering, best bargain, descriptor counts, star ratings) |
 | `04-grouping.ipynb` | Lesson walkthrough — `groupby()` counts/mins, `apply()` per group, multi-column groups, `agg([len, min, max])`, multi-index, `reset_index()`, `sort_values()`/`sort_index()` |
 | `04-exercise.ipynb` | Exercise 4 solutions, questions 1–6 (reviewers written, best rating per price, price extremes per variety, reviewer means, `{country, variety}` MultiIndex counts) |
-| `winemag-data-130k-v2.csv` | Wine reviews used by sections 1–4 — 129,971 rows, 14 cols (13 after `index_col=0`) |
+| `05-datatypes.ipynb` | Lesson walkthrough — `dtype`/`dtypes`, `astype()`, index dtype, `pd.isnull()`, `fillna()`, `replace()` |
+| `05-exercise.ipynb` | Exercise 5 solutions, questions 1–4 (points dtype, points as strings, missing prices, `region_1` counts with `fillna`) |
+| `winemag-data-130k-v2.csv` | Wine reviews used by sections 1–5 — 129,971 rows, 14 cols (13 after `index_col=0`) |
 | `winemag-data_first150k.csv` | Wine reviews used by exercise 1 question 4 — 150,930 rows |
 
 Both CSVs come from Kaggle's [Wine Reviews](https://www.kaggle.com/zynicide/wine-reviews) dataset and are **gitignored** (≈50 MB each) — download them from Kaggle into `pandas-learn/` if they're missing.
@@ -76,6 +79,14 @@ The venv already has pandas (3.0.6), jupyterlab, and nbconvert. To re-run a note
 - **Multi-index** — grouping by two columns yields an index with multiple levels; `reset_index()` flattens it back to columns, which is usually what you want before sorting
 - **Sorting** — `sort_values(by="len")` sorts by value (`ascending=False` for descending, `by=[...]` for several keys), `sort_index()` sorts by the labels instead
 
+### 5. Data Types and Missing Values
+
+- **`dtype` / `dtypes`** — a column's type, or every column's at once; use `astype()` to convert, and remember the index has its own dtype
+- **Missing data** — `NaN` entries are always `float64`; select them with `pd.isnull()`/`pd.notnull()`, replace them with `fillna("Unknown")`, or carry the previous value forward with `.ffill()`
+- **`replace()`** — swap specific values out, e.g. `taster_twitter_handle.replace("@old", "@new")`
+
+> **pandas 3.0 note:** the tutorial says string columns come out as `object`, but pandas 3.x defaults strings to the dedicated `str` dtype (`StringDtype`). So `reviews.dtypes` shows `country str` rather than `country object`, and `astype("str")` returns `dtype: str` — same behavior, newer type name.
+
 ## Next
 
-Exercise forks on Kaggle: [section 1](https://www.kaggle.com/kernels/fork/587970), [section 2](https://www.kaggle.com/kernels/fork/587910), [section 3](https://www.kaggle.com/kernels/fork/595524), [section 4](https://www.kaggle.com/kernels/fork/598715).
+Exercise forks on Kaggle: [section 1](https://www.kaggle.com/kernels/fork/587970), [section 2](https://www.kaggle.com/kernels/fork/587910), [section 3](https://www.kaggle.com/kernels/fork/595524), [section 4](https://www.kaggle.com/kernels/fork/598715), [section 5](https://www.kaggle.com/kernels/fork/598826).
