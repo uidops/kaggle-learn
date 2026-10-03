@@ -33,14 +33,14 @@ Pattern per section: the `NN-*` lesson notebook is the walkthrough, `NN-exercise
 | `winemag-data-130k-v2.csv` | Wine reviews used by sections 1–6 — 129,971 rows, 14 cols (13 after `index_col=0`) |
 | `winemag-data_first150k.csv` | Wine reviews used by exercise 1 question 4 — 150,930 rows |
 
-Dataset sources — all from Kaggle:
+Dataset sources — all on Kaggle:
 
-| Used by | Files | Committed? |
-| --- | --- | --- |
-| Sections 1–6 | `winemag-data-130k-v2.csv`, `winemag-data_first150k.csv` (≈50 MB each) | no — gitignored |
-| Section 6 lesson | `CAvideos.csv`, `GBvideos.csv` — [Trending YouTube](https://www.kaggle.com/datasurvivor/trending-youtube-video-statistics) | no — gitignored (61 MB / 51 MB) |
-| Section 6 exercise Q3 | `gaming.csv`, `movies.csv` — [Things on Reddit](https://www.kaggle.com/residentmario/things-on-reddit) | yes (~150 KB combined) |
-| Section 6 exercise Q4 | `meets.csv`, `openpowerlifting.csv` — [Powerlifting Database](https://www.kaggle.com/open-powerlifting/powerlifting-database) | `meets.csv` yes (609 KB); `openpowerlifting.csv` no — gitignored (29 MB) |
+| Used by | Dataset | Files | Committed? |
+| --- | --- | --- | --- |
+| Sections 1–6 | [Wine Reviews](https://www.kaggle.com/datasets/zynicide/wine-reviews) | `winemag-data-130k-v2.csv` (129,971 rows), `winemag-data_first150k.csv` (150,930 rows) — ≈50 MB each | no — gitignored |
+| Section 6 lesson | [Trending YouTube Video Statistics](https://www.kaggle.com/datasets/datasnaek/youtube-new) | `CAvideos.csv` (61 MB), `GBvideos.csv` (51 MB) | no — gitignored |
+| Section 6 exercise Q3 | [Things on Reddit](https://www.kaggle.com/datasets/residentmario/things-on-reddit/) | `gaming.csv`, `movies.csv` — ~150 KB combined | yes |
+| Section 6 exercise Q4 | [Powerlifting Database](https://www.kaggle.com/datasets/open-powerlifting/powerlifting-database/versions/1) | `meets.csv` (609 KB), `openpowerlifting.csv` (29 MB) | `meets.csv` yes; `openpowerlifting.csv` no — gitignored |
 
 Gitignored files must be downloaded from Kaggle into `pandas-learn/` by hand; the notebooks won't run without them.
 
