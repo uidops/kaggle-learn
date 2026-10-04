@@ -7,7 +7,7 @@ Notes and worked solutions for Kaggle's **[Data Cleaning](https://www.kaggle.com
 | # | Tutorial | Exercise | Questions | Status |
 | --- | --- | --- | --- | --- |
 | 1 | [Handling Missing Values](https://www.kaggle.com/code/alexisbcook/handling-missing-values) | [exercise](https://www.kaggle.com/code/alexisbcook/exercise-handling-missing-values) | 6 | ✅ done |
-| 2 | [Scaling and Normalization](https://www.kaggle.com/code/alexisbcook/scaling-and-normalization) | [exercise](https://www.kaggle.com/code/alexisbcook/exercise-scaling-and-normalization) | 2 | ⏳ not started |
+| 2 | [Scaling and Normalization](https://www.kaggle.com/code/alexisbcook/scaling-and-normalization) | [exercise](https://www.kaggle.com/code/alexisbcook/exercise-scaling-and-normalization) | 2 | ✅ done |
 | 3 | [Parsing Dates](https://www.kaggle.com/code/alexisbcook/parsing-dates) | [exercise](https://www.kaggle.com/code/alexisbcook/exercise-parsing-dates) | 4 | ⏳ not started |
 | 4 | [Character Encodings](https://www.kaggle.com/code/alexisbcook/character-encodings) | [exercise](https://www.kaggle.com/code/alexisbcook/exercise-character-encodings) | 3 | ⏳ not started |
 | 5 | [Inconsistent Data Entry](https://www.kaggle.com/code/alexisbcook/inconsistent-data-entry) | [exercise](https://www.kaggle.com/code/alexisbcook/exercise-inconsistent-data-entry) | 3 | ⏳ not started |
@@ -18,6 +18,8 @@ Notes and worked solutions for Kaggle's **[Data Cleaning](https://www.kaggle.com
 | --- | --- |
 | `01-handling.ipynb` | Lesson walkthrough — `isnull().sum()`, `%` missing via `np.prod(shape)`, `dropna()` vs `dropna(axis=1)`, `fillna()`, `bfill()` |
 | `01-exercise.ipynb` | Exercise 1 solutions, questions 1–6 (first look, % missing, why data is missing, drop rows, drop columns, impute) |
+| `02-scaling.ipynb` | Lesson walkthrough — `minmax_scaling()` vs `stats.boxcox()`, before/after histograms with `sns.histplot` |
+| `02-exercise.ipynb` | Exercise 2 solutions, questions 1–2 (scale `goal`, normalize `pledged`) |
 | `Building_Permits.csv` | Exercise 1 dataset — 75 MB |
 | `NFL Play by Play 2009-2017 (v4).csv` | Lesson 1 dataset — 263 MB |
 
@@ -31,13 +33,15 @@ All from Kaggle:
 | Exercise 1 | [Building Permit Applications](https://www.kaggle.com/datasets/aparnashastry/building-permit-applications-data) | `Building_Permits.csv` (75 MB) | no — gitignored |
 | Lesson 2 | *none* — the lesson generates synthetic data with `np.random.exponential` | — | — |
 | Exercise 2 | [Kickstarter Projects](https://www.kaggle.com/datasets/kemical/kickstarter-projects) | `ks-projects-201801.csv` | no — gitignored |
-| Lesson 3 | [Landslide Events](https://www.kaggle.com/datasets/nasa/landslide-events) | `catalog.csv` (0.4 MB) | yes, when downloaded |
-| Exercise 3 | [Earthquake Database](https://www.kaggle.com/datasets/usgs/earthquake-database) + [Volcanic Eruptions](https://www.kaggle.com/datasets/smithsonian/volcanic-eruptions) | both `database.csv` — **rename on download** (see below) | yes, when downloaded |
+| Lesson 3 | [Landslide Events](https://www.kaggle.com/datasets/nasa/landslide-events) | `catalog.csv` (0.4 MB) | no — gitignored |
+| Exercise 3 | [Earthquake Database](https://www.kaggle.com/datasets/usgs/earthquake-database) + [Volcanic Eruptions](https://www.kaggle.com/datasets/smithsonian/volcanic-eruptions) | `database.csv` + `volcanic-eruptions-database.csv` (renamed — see below) | no — gitignored |
 | Lesson 4 | [Kickstarter Projects](https://www.kaggle.com/datasets/kemical/kickstarter-projects) — the 2016 file | `ks-projects-201612.csv` | no — gitignored |
-| Exercise 4 | [Fatal Police Shootings in the US](https://www.kaggle.com/datasets/kwullum/fatal-police-shootings-in-the-us) | `PoliceKillingsUS.csv` (3.2 MB) | yes, when downloaded |
-| Lessons 5 + Exercise 5 | [Pakistan Intellectual Capital](https://www.kaggle.com/datasets/alexisbcook/pakistan-intellectual-capital) | `pakistan_intellectual_capital.csv` (0.2 MB) | yes, when downloaded |
+| Exercise 4 | [Fatal Police Shootings in the US](https://www.kaggle.com/datasets/kwullum/fatal-police-shootings-in-the-us) | `PoliceKillingsUS.csv` (3.2 MB) | no — gitignored |
+| Lessons 5 + Exercise 5 | [Pakistan Intellectual Capital](https://www.kaggle.com/datasets/alexisbcook/pakistan-intellectual-capital) | `pakistan_intellectual_capital.csv` (0.2 MB) | no — gitignored |
 
-> ⚠️ The earthquake and volcanic datasets both contain a file named `database.csv`. The exercise reads them as two separate frames, so download them into different names (e.g. `earthquake-database.csv`, `volcanic-eruptions.csv`) and adjust the `read_csv` path — otherwise the second download silently overwrites the first.
+Every CSV in `datacleaning-learn/` is gitignored by the `datacleaning-learn/*.csv` rule — datasets are downloaded from Kaggle, never committed.
+
+> ⚠️ The earthquake and volcanic datasets both contain a file named `database.csv`. Downloading both side by side silently overwrites the first — so the volcano file is kept here as **`volcanic-eruptions-database.csv`** and `03-exercise.ipynb` reads that name instead of the original `database.csv`.
 
 Gitignored files must be downloaded from Kaggle into `datacleaning-learn/` by hand; the notebooks won't run without them.
 
