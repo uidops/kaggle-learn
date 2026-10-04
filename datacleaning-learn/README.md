@@ -10,7 +10,7 @@ Notes and worked solutions for Kaggle's **[Data Cleaning](https://www.kaggle.com
 | 2 | [Scaling and Normalization](https://www.kaggle.com/code/alexisbcook/scaling-and-normalization) | [exercise](https://www.kaggle.com/code/alexisbcook/exercise-scaling-and-normalization) | 2 | ✅ done |
 | 3 | [Parsing Dates](https://www.kaggle.com/code/alexisbcook/parsing-dates) | [exercise](https://www.kaggle.com/code/alexisbcook/exercise-parsing-dates) | 4 | ✅ done |
 | 4 | [Character Encodings](https://www.kaggle.com/code/alexisbcook/character-encodings) | [exercise](https://www.kaggle.com/code/alexisbcook/exercise-character-encodings) | 3 | ✅ done |
-| 5 | [Inconsistent Data Entry](https://www.kaggle.com/code/alexisbcook/inconsistent-data-entry) | [exercise](https://www.kaggle.com/code/alexisbcook/exercise-inconsistent-data-entry) | 3 | ⏳ not started |
+| 5 | [Inconsistent Data Entry](https://www.kaggle.com/code/alexisbcook/inconsistent-data-entry) | [exercise](https://www.kaggle.com/code/alexisbcook/exercise-inconsistent-data-entry) | 3 | ✅ done — *course complete* |
 
 18 questions total. Naming follows `pandas-learn/`: `NN-<topic>.ipynb` is the lesson walkthrough, `NN-exercise.ipynb` is the exercise with answers filled in.
 
@@ -24,6 +24,8 @@ Notes and worked solutions for Kaggle's **[Data Cleaning](https://www.kaggle.com
 | `03-exercise.ipynb` | Exercise 3 solutions, questions 1–4 (dtype check, repair malformed dates then parse, day of month, plot) + optional volcano "Last Known Eruption" bonus |
 | `04-character-encodings.ipynb` | Lesson walkthrough — `str`↔`bytes`, `encode`/`decode`, `charset_normalizer.detect()`, read with `encoding=`, write back as UTF-8. **Two cells intentionally raise `UnicodeDecodeError`** (see below) |
 | `04-exercise.ipynb` | Exercise 4 solutions, questions 1–3 (`big5-tw`→UTF-8, detect + read `PoliceKillingsUS.csv`, save as `my_file.csv`) |
+| `05-inconsistent-data-entry.ipynb` | Lesson walkthrough — `.str.lower()`/`.str.strip()` pre-processing, `rapidfuzz.process.extract` with `token_sort_ratio`, `replace_matches_in_column()` helper |
+| `05-exercise.ipynb` | Exercise 5 solutions, questions 1–3 (unique `Graduated from`, strip it, fold `usofa` → `usa`) |
 | `Building_Permits.csv` | Exercise 1 dataset — 75 MB *(gitignored)* |
 | `NFL Play by Play 2009-2017 (v4).csv` | Lesson 1 dataset — 263 MB *(gitignored)* |
 
@@ -60,10 +62,10 @@ Notebooks read their CSVs from this directory (bare filenames, no `../input/` pr
 
 ### Dependencies
 
-`pandas` and `numpy` were already present. This course adds five packages, **all now installed** in the repo venv:
+`pandas` and `numpy` were already present. This course adds these packages, **all now installed** in the repo venv:
 
 ```bash
-.venv/bin/pip install scipy matplotlib seaborn mlxtend fuzzywuzzy python-Levenshtein charset_normalizer
+.venv/bin/pip install scipy matplotlib seaborn mlxtend charset_normalizer rapidfuzz
 ```
 
 | Package | Needed by |
@@ -72,9 +74,11 @@ Notebooks read their CSVs from this directory (bare filenames, no `../input/` pr
 | `mlxtend` | Lesson 2 — min-max scaling (`minmax_scaling`) |
 | `matplotlib`, `seaborn` | Lessons 2 & 3 — plotting |
 | `charset_normalizer` | Lessons 4 & 5 — `detect()` for finding a file's encoding |
-| `fuzzywuzzy` (+ `python-Levenshtein`) | Lesson 5 — fuzzy matching |
+| `rapidfuzz` | Lesson 5 — fuzzy matching (`process.extract`, `fuzz.token_sort_ratio`) |
 
-Verified installed: pandas 3.0.6, numpy 2.5.3, scipy 1.18.1, mlxtend 0.25.0, seaborn 0.13.2, matplotlib 3.11.2, fuzzywuzzy 0.18.0, charset_normalizer (with `detect`).
+Verified installed: pandas 3.0.6, numpy 2.5.3, scipy 1.18.1, mlxtend 0.25.0, seaborn 0.13.2, matplotlib 3.11.2, charset_normalizer 3.5.2, RapidFuzz 3.14.6.
+
+(`fuzzywuzzy` 0.18.0 is also present — it's what the original Kaggle notebooks import, kept around for comparison, but these notebooks use `rapidfuzz` instead. See *Known issues* below.)
 
 **Jupyter itself had to be installed into the venv too** — it was only in the system Python's user site-packages, so `.venv/bin/jupyter` silently dispatched to the *system* `nbconvert` and the system interpreter (which has `pandas` but none of the packages above). Symptom: `ModuleNotFoundError: No module named 'mlxtend'` even though `.venv/bin/pip list` showed it installed. Now in the venv: `nbconvert`, `nbformat`, `jupyterlab`. The venv's `python3` kernel spec also pointed at a bare `python` (resolving to Homebrew's), and now uses the absolute `.venv/bin/python` path.
 
@@ -112,7 +116,8 @@ Verified installed: pandas 3.0.6, numpy 2.5.3, scipy 1.18.1, mlxtend 0.25.0, sea
 ### 5. Inconsistent Data Entry
 
 - **Pre-processing fixes ~80%**: `.str.strip()` for leading/trailing spaces and `.str.lower()` for case (`' Germany'` / `'germany'`)
-- **Fuzzy matching** catches the rest: `fuzzywuzzy.process.extract(target, choices, limit=10, scorer=fuzz.token_sort_ratio)`
+- **Fuzzy matching** catches the rest: `rapidfuzz.process.extract(target, choices, limit=10, scorer=rapidfuzz.fuzz.token_sort_ratio)` returns `(value, score, index)` triples; keep those scoring at or above a `min_ratio` and rewrite them
+- `token_sort_ratio` ignores word order, so `'usa'` ↔ `'usofa'` scores **75** — enough to fold them together at `min_ratio=70`, but not so loose that unrelated countries get merged (tune it per call)
 - A string is "closer" the fewer character changes separate it — automate early rather than hand-fixing thousands of entries
 
 ## Known issues with modern versions
@@ -121,9 +126,12 @@ Verified installed: pandas 3.0.6, numpy 2.5.3, scipy 1.18.1, mlxtend 0.25.0, sea
 - **`sns.distplot` is deprecated** and will be removed in seaborn 0.14. The original lesson 3 calls it; the notebooks here use the replacement **`sns.histplot(..., kde=True)`** instead, so they run clean on the installed 0.13.2 with no warning.
 - **pandas 3 string dtype**: string columns report `str` (`StringDtype`) rather than `object`. Same behavior, newer type name — see the note in `pandas-learn/README.md`.
 - **Two cells in `04-character-encodings.ipynb` are *supposed* to raise `UnicodeDecodeError`** — cell 5 (`after.decode("ascii")`) and cell 7 (`pd.read_csv("ks-projects-201612.csv")` with no `encoding=`). They're the lesson's whole point: the first shows ASCII can't hold the euro symbol, the second shows why you must detect the encoding before reading. The Kaggle original does exactly the same. A normal `nbconvert --execute` stops at cell 5; run it with `--ExecutePreprocessor.allow_errors=True` to get through all 11 cells (how this notebook's stored outputs were produced).
+- **Lesson 5 uses `rapidfuzz` instead of the original's `fuzzywuzzy`.** `fuzzywuzzy` is unmaintained and `rapidfuzz` is its maintained successor with an API-compatible `process.extract`. One real difference: `rapidfuzz` returns **3-tuples** `(value, score, index)` where `fuzzywuzzy` returns **2-tuples** `(value, score)` — so `[m[0] for m in matches if m[1] >= min_ratio]` works on both, but unpacking `for value, score in ...` does not. Scores are identical for `token_sort_ratio` (`usa`↔`usofa` = 75 in both).
 
 ## Next
 
-Course: [kaggle.com/learn/data-cleaning](https://www.kaggle.com/learn/data-cleaning) — discussion forum [here](https://www.kaggle.com/learn/data-cleaning/discussion).
+**Data Cleaning complete** — all 5 lessons, all 18 questions. Course: [kaggle.com/learn/data-cleaning](https://www.kaggle.com/learn/data-cleaning) — discussion forum [here](https://www.kaggle.com/learn/data-cleaning/discussion).
 
-After this, the Kaggle path branches: keep going with data work, or start `Intro to ML` (which builds on Python, not Pandas). The topics this course does *not* cover — `merge()`, reshaping (`melt`/`pivot`), categorical dtypes, and duplicate rows — are still open items from `pandas-learn/`.
+Two courses now done: `pandas-learn/` (6 sections) and `datacleaning-learn/` (5 sections).
+
+The Kaggle path branches from here: keep going with data work, or start `Intro to ML` (which builds on Python, not Pandas). The topics these two courses do *not* cover — `merge()`, reshaping (`melt`/`pivot`), categorical dtypes, and duplicate rows — are still open items.
