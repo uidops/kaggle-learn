@@ -9,7 +9,7 @@ Notes and worked solutions for Kaggle's **[Data Cleaning](https://www.kaggle.com
 | 1 | [Handling Missing Values](https://www.kaggle.com/code/alexisbcook/handling-missing-values) | [exercise](https://www.kaggle.com/code/alexisbcook/exercise-handling-missing-values) | 6 | ✅ done |
 | 2 | [Scaling and Normalization](https://www.kaggle.com/code/alexisbcook/scaling-and-normalization) | [exercise](https://www.kaggle.com/code/alexisbcook/exercise-scaling-and-normalization) | 2 | ✅ done |
 | 3 | [Parsing Dates](https://www.kaggle.com/code/alexisbcook/parsing-dates) | [exercise](https://www.kaggle.com/code/alexisbcook/exercise-parsing-dates) | 4 | ✅ done |
-| 4 | [Character Encodings](https://www.kaggle.com/code/alexisbcook/character-encodings) | [exercise](https://www.kaggle.com/code/alexisbcook/exercise-character-encodings) | 3 | ⏳ not started |
+| 4 | [Character Encodings](https://www.kaggle.com/code/alexisbcook/character-encodings) | [exercise](https://www.kaggle.com/code/alexisbcook/exercise-character-encodings) | 3 | ✅ done |
 | 5 | [Inconsistent Data Entry](https://www.kaggle.com/code/alexisbcook/inconsistent-data-entry) | [exercise](https://www.kaggle.com/code/alexisbcook/exercise-inconsistent-data-entry) | 3 | ⏳ not started |
 
 18 questions total. Naming follows `pandas-learn/`: `NN-<topic>.ipynb` is the lesson walkthrough, `NN-exercise.ipynb` is the exercise with answers filled in.
@@ -22,6 +22,8 @@ Notes and worked solutions for Kaggle's **[Data Cleaning](https://www.kaggle.com
 | `02-exercise.ipynb` | Exercise 2 solutions, questions 1–2 (scale `goal`, normalize `pledged`) |
 | `03-parsingdates.ipynb` | Lesson walkthrough — `object` vs `datetime64`, `to_datetime(format=...)`, `format='mixed'`, `.dt.day`, histogram sanity check |
 | `03-exercise.ipynb` | Exercise 3 solutions, questions 1–4 (dtype check, repair malformed dates then parse, day of month, plot) + optional volcano "Last Known Eruption" bonus |
+| `04-character-encodings.ipynb` | Lesson walkthrough — `str`↔`bytes`, `encode`/`decode`, `charset_normalizer.detect()`, read with `encoding=`, write back as UTF-8. **Two cells intentionally raise `UnicodeDecodeError`** (see below) |
+| `04-exercise.ipynb` | Exercise 4 solutions, questions 1–3 (`big5-tw`→UTF-8, detect + read `PoliceKillingsUS.csv`, save as `my_file.csv`) |
 | `Building_Permits.csv` | Exercise 1 dataset — 75 MB *(gitignored)* |
 | `NFL Play by Play 2009-2017 (v4).csv` | Lesson 1 dataset — 263 MB *(gitignored)* |
 
@@ -118,6 +120,7 @@ Verified installed: pandas 3.0.6, numpy 2.5.3, scipy 1.18.1, mlxtend 0.25.0, sea
 - **pandas 3 removed `fillna(method=...)`** — the original lesson 1 calls `fillna(method='bfill', axis=0)`, which raises `TypeError: NDFrame.fillna() got an unexpected keyword argument 'method'`. Use `.bfill(axis=0)` instead. Both `01-*.ipynb` here already use the fixed form (verified re-executed, no errors).
 - **`sns.distplot` is deprecated** and will be removed in seaborn 0.14. The original lesson 3 calls it; the notebooks here use the replacement **`sns.histplot(..., kde=True)`** instead, so they run clean on the installed 0.13.2 with no warning.
 - **pandas 3 string dtype**: string columns report `str` (`StringDtype`) rather than `object`. Same behavior, newer type name — see the note in `pandas-learn/README.md`.
+- **Two cells in `04-character-encodings.ipynb` are *supposed* to raise `UnicodeDecodeError`** — cell 5 (`after.decode("ascii")`) and cell 7 (`pd.read_csv("ks-projects-201612.csv")` with no `encoding=`). They're the lesson's whole point: the first shows ASCII can't hold the euro symbol, the second shows why you must detect the encoding before reading. The Kaggle original does exactly the same. A normal `nbconvert --execute` stops at cell 5; run it with `--ExecutePreprocessor.allow_errors=True` to get through all 11 cells (how this notebook's stored outputs were produced).
 
 ## Next
 
