@@ -40,7 +40,7 @@ Dataset sources — all on Kaggle. Inputs live in `datasets/{dataset-slug}/` and
 | Section 6 exercise Q3 | [Things on Reddit](https://www.kaggle.com/datasets/residentmario/things-on-reddit/) | `datasets/things-on-reddit/` | `gaming.csv`, `movies.csv` — ~150 KB combined |
 | Section 6 exercise Q4 | [Powerlifting Database](https://www.kaggle.com/datasets/open-powerlifting/powerlifting-database/versions/1) | `datasets/powerlifting-database/` | `meets.csv` (609 KB), `openpowerlifting.csv` (29 MB) |
 
-Every input CSV under `datasets/` is gitignored except `gaming.csv`, `movies.csv`, and `meets.csv`, which are small enough to keep in the repo. Outputs are written next to the notebook that produces them — `cows_and_goats.csv` here is an exercise answer, not a dataset.
+Every input CSV under `datasets/` is gitignored — datasets are downloaded from Kaggle, never committed. Outputs are written next to the notebook that produces them — `cows_and_goats.csv` here is an exercise answer, not a dataset.
 
 ## Running the notebooks
 

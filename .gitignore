@@ -1,12 +1,8 @@
 .idea/
 .venv/
 
-# input datasets live under datasets/ and are never committed;
-# the three small exceptions below are tracked on purpose
+# input datasets live under datasets/ and are never committed
 datasets/**/*.csv
-!datasets/things-on-reddit/gaming.csv
-!datasets/things-on-reddit/movies.csv
-!datasets/powerlifting-database/meets.csv
 
 # notebook outputs, written next to the notebooks that produce them
 datacleaning-learn/*.csv
