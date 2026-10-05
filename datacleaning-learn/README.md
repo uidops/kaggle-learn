@@ -132,6 +132,6 @@ Verified installed: pandas 3.0.6, numpy 2.5.3, scipy 1.18.1, mlxtend 0.25.0, sea
 
 **Data Cleaning complete** — all 5 lessons, all 18 questions. Course: [kaggle.com/learn/data-cleaning](https://www.kaggle.com/learn/data-cleaning) — discussion forum [here](https://www.kaggle.com/learn/data-cleaning/discussion).
 
-Two courses now done: `pandas-learn/` (6 sections) and `datacleaning-learn/` (5 sections).
+Three courses now done: `pandas-learn/` (6 sections), `datacleaning-learn/` (5 sections), and `intro-machine-learning/` (7 sections).
 
-The Kaggle path branches from here: keep going with data work, or start `Intro to ML` (which builds on Python, not Pandas). The topics these two courses do *not* cover — `merge()`, reshaping (`melt`/`pivot`), categorical dtypes, and duplicate rows — are still open items.
+The Kaggle path branches from here: continue with data work, or follow `intro-machine-learning/` into **Intermediate Machine Learning**. The topics these courses do *not* cover — `merge()`, reshaping (`melt`/`pivot`), categorical dtypes, and duplicate rows — are still open items.
