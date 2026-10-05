@@ -11,7 +11,7 @@ Notes and worked solutions for [Kaggle's *Intro to Pandas* micro-course](https:/
 | 3 | [Summary Functions and Maps](https://www.kaggle.com/code/residentmario/summary-functions-and-maps) | `03-maps.ipynb`, `03-exercise.ipynb` (7 questions) |
 | 4 | [Grouping and Sorting](https://www.kaggle.com/code/residentmario/grouping-and-sorting) | `04-grouping.ipynb`, `04-exercise.ipynb` (6 questions) |
 | 5 | [Data Types and Missing Values](https://www.kaggle.com/code/residentmario/data-types-and-missing-values) | `05-datatypes.ipynb`, `05-exercise.ipynb` (4 questions) |
-| 6 | [Renaming and Combining](https://www.kaggle.com/code/residentmario/renaming-and-combining) | `06-renaming.ipynb`, `06-exercise.ipynb` (4 questions) — *course complete* |
+| 6 | [Renaming and Combining](https://www.kaggle.com/code/residentmario/renaming-and-combining) | `06-renaming.ipynb`, `06-exercise.ipynb` (4 questions) |
 
 Pattern per section: the `NN-*` lesson notebook is the walkthrough, `NN-exercise` is the exercise with answers filled in.
 
@@ -41,8 +41,6 @@ Dataset sources — all on Kaggle:
 | Section 6 lesson | [Trending YouTube Video Statistics](https://www.kaggle.com/datasets/datasnaek/youtube-new) | `CAvideos.csv` (61 MB), `GBvideos.csv` (51 MB) | no — gitignored |
 | Section 6 exercise Q3 | [Things on Reddit](https://www.kaggle.com/datasets/residentmario/things-on-reddit/) | `gaming.csv`, `movies.csv` — ~150 KB combined | yes |
 | Section 6 exercise Q4 | [Powerlifting Database](https://www.kaggle.com/datasets/open-powerlifting/powerlifting-database/versions/1) | `meets.csv` (609 KB), `openpowerlifting.csv` (29 MB) | `meets.csv` yes; `openpowerlifting.csv` no — gitignored |
-
-Gitignored files must be downloaded from Kaggle into `pandas-learn/` by hand; the notebooks won't run without them.
 
 ## Running the notebooks
 
@@ -96,8 +94,6 @@ The venv already has pandas (3.0.6), jupyterlab, and nbconvert. To re-run a note
 - **`dtype` / `dtypes`** — a column's type, or every column's at once; use `astype()` to convert, and remember the index has its own dtype
 - **Missing data** — `NaN` entries are always `float64`; select them with `pd.isnull()`/`pd.notnull()`, replace them with `fillna("Unknown")`, or carry the previous value forward with `.ffill()`
 - **`replace()`** — swap specific values out, e.g. `taster_twitter_handle.replace("@old", "@new")`
-
-> **pandas 3.0 note:** the tutorial says string columns come out as `object`, but pandas 3.x defaults strings to the dedicated `str` dtype (`StringDtype`). So `reviews.dtypes` shows `country str` rather than `country object`, and `astype("str")` returns `dtype: str` — same behavior, newer type name.
 
 ### 6. Renaming and Combining
 
