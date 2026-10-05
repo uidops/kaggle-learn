@@ -1,9 +1,13 @@
 .idea/
 .venv/
-pandas-learn/winemag-data-130k-v2.csv
-pandas-learn/winemag-data_first150k.csv
-pandas-learn/CAvideos.csv
-pandas-learn/GBvideos.csv
-pandas-learn/openpowerlifting.csv
+
+# input datasets live under datasets/ and are never committed;
+# the three small exceptions below are tracked on purpose
+datasets/**/*.csv
+!datasets/things-on-reddit/gaming.csv
+!datasets/things-on-reddit/movies.csv
+!datasets/powerlifting-database/meets.csv
+
+# notebook outputs, written next to the notebooks that produce them
 datacleaning-learn/*.csv
 intro-machine-learning/*.csv

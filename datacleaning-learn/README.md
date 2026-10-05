@@ -26,26 +26,24 @@ Notes and worked solutions for Kaggle's **[Data Cleaning](https://www.kaggle.com
 | `04-exercise.ipynb` | Exercise 4 solutions, questions 1–3 (`big5-tw`→UTF-8, detect + read `PoliceKillingsUS.csv`, save as `my_file.csv`) |
 | `05-inconsistent-data-entry.ipynb` | Lesson walkthrough — `.str.lower()`/`.str.strip()` pre-processing, `rapidfuzz.process.extract` with `token_sort_ratio`, `replace_matches_in_column()` helper |
 | `05-exercise.ipynb` | Exercise 5 solutions, questions 1–3 (unique `Graduated from`, strip it, fold `usofa` → `usa`) |
-| `Building_Permits.csv` | Exercise 1 dataset — 75 MB *(gitignored)* |
-| `NFL Play by Play 2009-2017 (v4).csv` | Lesson 1 dataset — 263 MB *(gitignored)* |
 
 ## Datasets
 
-All from Kaggle:
+All from Kaggle. Inputs live in `datasets/{dataset-slug}/` and are referenced from the notebooks as `../datasets/…`:
 
-| Used by | Dataset | Local file | Committed? |
+| Used by | Dataset | Path | Files |
 | --- | --- | --- | --- |
-| Lesson 1 | [NFL Play-by-Play 2009–2016](https://www.kaggle.com/datasets/maxhorowitz/nflplaybyplay2009to2016) | `NFL Play by Play 2009-2017 (v4).csv` (263 MB) | no — gitignored |
-| Exercise 1 | [Building Permit Applications](https://www.kaggle.com/datasets/aparnashastry/building-permit-applications-data) | `Building_Permits.csv` (75 MB) | no — gitignored |
+| Lesson 1 | [NFL Play-by-Play 2009–2016](https://www.kaggle.com/datasets/maxhorowitz/nflplaybyplay2009to2016) | `datasets/nflplaybyplay2009to2016/` | `NFL Play by Play 2009-2017 (v4).csv` (263 MB) |
+| Exercise 1 | [Building Permit Applications](https://www.kaggle.com/datasets/aparnashastry/building-permit-applications-data) | `datasets/building-permit-applications-data/` | `Building_Permits.csv` (75 MB) |
 | Lesson 2 | *none* — the lesson generates synthetic data with `np.random.exponential` | — | — |
-| Exercise 2 | [Kickstarter Projects](https://www.kaggle.com/datasets/kemical/kickstarter-projects) | `ks-projects-201801.csv` | no — gitignored |
-| Lesson 3 | [Landslide Events](https://www.kaggle.com/datasets/nasa/landslide-events) | `catalog.csv` (0.4 MB) | no — gitignored |
-| Exercise 3 | [Earthquake Database](https://www.kaggle.com/datasets/usgs/earthquake-database) + [Volcanic Eruptions](https://www.kaggle.com/datasets/smithsonian/volcanic-eruptions) | `database.csv` + `volcanic-eruptions-database.csv` | no — gitignored |
-| Lesson 4 | [Kickstarter Projects](https://www.kaggle.com/datasets/kemical/kickstarter-projects) — the 2016 file | `ks-projects-201612.csv` | no — gitignored |
-| Exercise 4 | [Fatal Police Shootings in the US](https://www.kaggle.com/datasets/kwullum/fatal-police-shootings-in-the-us) | `PoliceKillingsUS.csv` (3.2 MB) | no — gitignored |
-| Lessons 5 + Exercise 5 | [Pakistan Intellectual Capital](https://www.kaggle.com/datasets/alexisbcook/pakistan-intellectual-capital) | `pakistan_intellectual_capital.csv` (0.2 MB) | no — gitignored |
+| Exercise 2 | [Kickstarter Projects](https://www.kaggle.com/datasets/kemical/kickstarter-projects) | `datasets/kickstarter-projects/` | `ks-projects-201801.csv` |
+| Lesson 3 | [Landslide Events](https://www.kaggle.com/datasets/nasa/landslide-events) | `datasets/landslide-events/` | `catalog.csv` (0.4 MB) |
+| Exercise 3 | [Earthquake Database](https://www.kaggle.com/datasets/usgs/earthquake-database) + [Volcanic Eruptions](https://www.kaggle.com/datasets/smithsonian/volcanic-eruptions) | `datasets/earthquake-database/`, `datasets/volcanic-eruptions/` | `database.csv`, `volcanic-eruptions-database.csv` |
+| Lesson 4 | [Kickstarter Projects](https://www.kaggle.com/datasets/kemical/kickstarter-projects) — the 2016 file | `datasets/kickstarter-projects/` | `ks-projects-201612.csv` |
+| Exercise 4 | [Fatal Police Shootings in the US](https://www.kaggle.com/datasets/kwullum/fatal-police-shootings-in-the-us) | `datasets/fatal-police-shootings-in-the-us/` | `PoliceKillingsUS.csv` (3.2 MB) |
+| Lessons 5 + Exercise 5 | [Pakistan Intellectual Capital](https://www.kaggle.com/datasets/alexisbcook/pakistan-intellectual-capital) | `datasets/pakistan-intellectual-capital/` | `pakistan_intellectual_capital.csv` (0.2 MB) |
 
-Every CSV in `datacleaning-learn/` is gitignored by the `datacleaning-learn/*.csv` rule — datasets are downloaded from Kaggle, never committed.
+Every input CSV under `datasets/` is gitignored — datasets are downloaded from Kaggle, never committed. Outputs (`my_file.csv`, `ks-projects-201801-utf8.csv`) are written next to the notebook that produces them and are ignored by `datacleaning-learn/*.csv`.
 
 ## Running the notebooks
 
@@ -54,7 +52,7 @@ Every CSV in `datacleaning-learn/` is gitignored by the `datacleaning-learn/*.cs
 .venv/bin/jupyter lab datacleaning-learn/
 ```
 
-Notebooks read their CSVs from this directory (bare filenames, no `../input/` prefix).
+Notebooks read their CSVs from `../datasets/`, one level up from the notebook.
 
 ### Dependencies
 

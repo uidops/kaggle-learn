@@ -30,17 +30,17 @@ Pattern per section: the `NN-*` lesson notebook is the walkthrough, `NN-exercise
 | `05-exercise.ipynb` | Exercise 5 solutions, questions 1–4 (points dtype, points as strings, missing prices, `region_1` counts with `fillna`) |
 | `06-renaming.ipynb` | Lesson walkthrough — `rename(columns=)`, `rename(index=)`, `rename_axis()`, `pd.concat()`, `set_index()` + `join()` with `lsuffix`/`rsuffix` |
 | `06-exercise.ipynb` | Exercise 6 solutions, questions 1–4 (rename locale columns, index name, Reddit products via `concat`, powerlifting meets + lifters via `join`) |
-| `winemag-data-130k-v2.csv` | Wine reviews used by sections 1–6 — 129,971 rows, 14 cols (13 after `index_col=0`) |
-| `winemag-data_first150k.csv` | Wine reviews used by exercise 1 question 4 — 150,930 rows |
 
-Dataset sources — all on Kaggle:
+Dataset sources — all on Kaggle. Inputs live in `datasets/{dataset-slug}/` and are referenced from the notebooks as `../datasets/…`:
 
-| Used by | Dataset | Files | Committed? |
+| Used by | Dataset | Path | Files |
 | --- | --- | --- | --- |
-| Sections 1–6 | [Wine Reviews](https://www.kaggle.com/datasets/zynicide/wine-reviews) | `winemag-data-130k-v2.csv` (129,971 rows), `winemag-data_first150k.csv` (150,930 rows) — ≈50 MB each | no — gitignored |
-| Section 6 lesson | [Trending YouTube Video Statistics](https://www.kaggle.com/datasets/datasnaek/youtube-new) | `CAvideos.csv` (61 MB), `GBvideos.csv` (51 MB) | no — gitignored |
-| Section 6 exercise Q3 | [Things on Reddit](https://www.kaggle.com/datasets/residentmario/things-on-reddit/) | `gaming.csv`, `movies.csv` — ~150 KB combined | yes |
-| Section 6 exercise Q4 | [Powerlifting Database](https://www.kaggle.com/datasets/open-powerlifting/powerlifting-database/versions/1) | `meets.csv` (609 KB), `openpowerlifting.csv` (29 MB) | `meets.csv` yes; `openpowerlifting.csv` no — gitignored |
+| Sections 1–6 | [Wine Reviews](https://www.kaggle.com/datasets/zynicide/wine-reviews) | `datasets/wine-reviews/` | `winemag-data-130k-v2.csv` (129,971 rows), `winemag-data_first150k.csv` (150,930 rows) — ≈50 MB each |
+| Section 6 lesson | [Trending YouTube Video Statistics](https://www.kaggle.com/datasets/datasnaek/youtube-new) | `datasets/youtube-new/` | `CAvideos.csv` (61 MB), `GBvideos.csv` (51 MB) |
+| Section 6 exercise Q3 | [Things on Reddit](https://www.kaggle.com/datasets/residentmario/things-on-reddit/) | `datasets/things-on-reddit/` | `gaming.csv`, `movies.csv` — ~150 KB combined |
+| Section 6 exercise Q4 | [Powerlifting Database](https://www.kaggle.com/datasets/open-powerlifting/powerlifting-database/versions/1) | `datasets/powerlifting-database/` | `meets.csv` (609 KB), `openpowerlifting.csv` (29 MB) |
+
+Every input CSV under `datasets/` is gitignored except `gaming.csv`, `movies.csv`, and `meets.csv`, which are small enough to keep in the repo. Outputs are written next to the notebook that produces them — `cows_and_goats.csv` here is an exercise answer, not a dataset.
 
 ## Running the notebooks
 

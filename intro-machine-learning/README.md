@@ -34,15 +34,15 @@ Numbering matches the course, so `NN-exercise.ipynb` pairs directly with lesson 
 
 ## Datasets
 
-All from Kaggle:
+All from Kaggle. Inputs live in `datasets/{dataset-slug}/` and are referenced from the notebooks as `../datasets/…`:
 
-| Used by | Dataset | Local file | Rows | Committed? |
+| Used by | Dataset | Path | File | Rows |
 | --- | --- | --- | --- | --- |
-| Lessons 2–6 | [Melbourne Housing Snapshot](https://www.kaggle.com/datasets/dansbecker/melbourne-housing-snapshot) | `melb_data.csv` (2.0 MB) | 13,580 | no — gitignored |
-| Exercises 2–7 | [Home Data for ML Course](https://www.kaggle.com/c/home-data-for-ml-course) — the House Prices competition | `train.csv` (0.44 MB) | 1,460 | no — gitignored |
-| Exercise 7 only | same competition, test split | `test.csv` | — | no — gitignored |
+| Lessons 2–6 | [Melbourne Housing Snapshot](https://www.kaggle.com/datasets/dansbecker/melbourne-housing-snapshot) | `datasets/melbourne-housing-snapshot/` | `melb_data.csv` (2.0 MB) | 13,580 |
+| Exercises 2–7 | [Home Data for ML Course](https://www.kaggle.com/c/home-data-for-ml-course) — the House Prices competition | `datasets/home-data-for-ml-course/` | `train.csv` (0.44 MB) | 1,460 |
+| Exercise 7 only | same competition, test split | `datasets/home-data-for-ml-course/` | `test.csv` | — |
 
-Every CSV in `intro-machine-learning/` is ignored by the `intro-machine-learning/*.csv` rule — datasets are downloaded from Kaggle, never committed. `submission.csv` (written by exercise 7) is covered by the same rule.
+Every input CSV under `datasets/` is gitignored — datasets are downloaded from Kaggle, never committed. `submission.csv` (written by exercise 7) is written next to that notebook and ignored by `intro-machine-learning/*.csv`.
 
 `test.csv` is available from the [competition data page](https://www.kaggle.com/c/home-data-for-ml-course/data) once the rules are accepted.
 
@@ -53,7 +53,7 @@ Every CSV in `intro-machine-learning/` is ignored by the `intro-machine-learning
 .venv/bin/jupyter lab intro-machine-learning/
 ```
 
-Notebooks read their CSVs from this directory (bare filenames, no `../input/` prefix).
+Notebooks read their CSVs from `../datasets/`, one level up from the notebook.
 
 ### Dependencies
 
