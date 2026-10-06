@@ -10,16 +10,19 @@ Notes and worked solutions for **[Feature Engineering](https://www.kaggle.com/le
 | --- | --- | --- | --- |
 | 1 | [What Is Feature Engineering](https://www.kaggle.com/code/ryanholbrook/what-is-feature-engineering) | [exercise](https://www.kaggle.com/code/ryanholbrook/exercise-what-is-feature-engineering) — *not done* | — |
 | 2 | [Mutual Information](https://www.kaggle.com/code/ryanholbrook/mutual-information) | [exercise](https://www.kaggle.com/code/ryanholbrook/exercise-mutual-information) | 3 |
+| 3 | [Creating Features](https://www.kaggle.com/code/ryanholbrook/creating-features) | [exercise](https://www.kaggle.com/code/ryanholbrook/exercise-creating-features) | 5 |
 
-Sections 3–6 (Creating Features, Clustering With K-Means, Principal Component Analysis, Target Encoding) plus the bonus House Prices notebook are not started — all of them live on [the course page](https://www.kaggle.com/learn/feature-engineering).
+Sections 4–6 (Clustering With K-Means, Principal Component Analysis, Target Encoding) plus the bonus House Prices notebook are not started — all of them live on [the course page](https://www.kaggle.com/learn/feature-engineering).
 
 Naming follows the other directories: `NN-<topic>.ipynb` is the lesson walkthrough, `NN-exercise.ipynb` is the exercise with answers filled in. One difference from the earlier courses: the lesson notebooks here are **code only** — no markdown cells, the narrative stays on the Kaggle tutorial page, so read them side by side with it.
 
 | File | What it is |
 | --- | --- |
 | `01-what-is-feature-engineering.ipynb` | Lesson walkthrough — load the Concrete dataset, baseline `RandomForestRegressor` with `cross_val_score`, then add `FCRatio` / `AggCmtRatio` / `WtrCmtRatio` synthetic features and re-score |
-| `02-mutual-information.ipynb` | Lesson walkthrough — `Exter Qual` vs `SalePrice` strip plot on Ames, then the full MI machinery on the Automobile dataset: word→number mapping with `.map()`, `factorize()` label encoding, `discrete_features` dtype check, `mutual_info_regression`, `plot_mi_scores`, `relplot`/`lmplot` interaction checks |
+| `02-mutual-information.ipynb` | Lesson walkthrough — `Exter Qual` vs `SalePrice` strip plot on Ames, then the full MI machinery on the Automobile dataset (`autos.csv`): `factorize()` label encoding, `discrete_features` dtype check, `mutual_info_regression`, `plot_mi_scores`, `relplot`/`lmplot` interaction checks |
 | `02-exercise.ipynb` | Exercise 2 solutions, questions 1–3 (which of `YearBuilt`/`MoSold`/`ScreenPorch` has highest MI, reading the MI score themes, `BldgType` interaction with `GrLivArea` vs `MoSold`) |
+| `03-creating-features.ipynb` | Lesson walkthrough — ratio/displacement features on autos, `np.log1p` on skewed `WindSpeed`, boolean-count features (roadway flags, concrete components), `str.split` to break apart `Policy`, `make_body_style` concatenation, `groupby().transform()` for `AverageIncome` / `StateFreq`, and a train-only grouped mean merged onto validation |
+| `03-exercise.ipynb` | Exercise 3 solutions, questions 1–5 (`LivLotRatio`/`Spaciousness`/`TotalOutsideSF`, `BldgType`×`GrLivArea` one-hot interaction, `PorchTypes` count, `MSClass` split, `MedNhbdArea` grouped median) + before/after `score_dataset` |
 
 ## Datasets
 
@@ -27,14 +30,17 @@ All from Kaggle. Inputs live in `datasets/{dataset-slug}/` and are referenced fr
 
 | Used by | Dataset | Path | Files |
 | --- | --- | --- | --- |
-| Lesson 1 | [Concrete Compressive Strength](https://www.kaggle.com/datasets/sinamhd9/concrete-comprehensive-strength) | `datasets/concrete-comprehensive-strength/` | `concrete_data.csv` (1,029 rows, 58 KB) |
-| Lesson 2 (first plot) | [Ames Housing](https://www.kaggle.com/datasets/ameroland/ames-housing) — the original De Cock file | `datasets/ames-housing-dataset/` | `AmesHousing.csv` (2,930 rows, 82 cols, 941 KB) |
-| Exercise 2 | *Ames*, same rows with `Order`/`PID` dropped and columns renamed to the `data_description.txt` style — the course's own copy, from the [House Prices competition](https://www.kaggle.com/c/house-prices-advanced-regression-techniques/data) | `datasets/ames-housing-dataset/` | `ames.csv` (2,930 rows, 79 cols = 78 features + `SalePrice`, 1.4 MB) |
-| Lesson 2 (MI demo) | [Automobile Dataset](https://www.kaggle.com/datasets/toramky/automobile-dataset) | `datasets/automobile-dataset/` | `Automobile_data.csv` (205 rows, 24 KB) |
+| Lesson 1 | [Concrete Compressive Strength](https://www.kaggle.com/datasets/sinamhd9/concrete-comprehensive-strength) — the raw UCI copy | `datasets/concrete-comprehensive-strength/` | `concrete_data.csv` (1,029 rows, 58 KB) |
+| Lesson 3 | same dataset, the course's cleaned copy (`Cement`, `FineAggregate`, …) | `datasets/concrete-comprehensive-strength/` | `concrete.csv` (1,030 rows, 9 cols, 48 KB) |
+| Lessons 2–3 | [Ames Housing](https://www.kaggle.com/datasets/ameroland/ames-housing) — the original De Cock file | `datasets/ames-housing-dataset/` | `AmesHousing.csv` (2,930 rows, 82 cols, 941 KB) |
+| Exercises 2–3 | *Ames*, same rows with `Order`/`PID` dropped and columns renamed to the `data_description.txt` style — the course's own copy, from the [House Prices competition](https://www.kaggle.com/c/house-prices-advanced-regression-techniques/data) | `datasets/ames-housing-dataset/` | `ames.csv` (2,930 rows, 79 cols = 78 features + `SalePrice`, 1.4 MB) |
+| Lessons 2–3 | [Automobile Dataset](https://www.kaggle.com/datasets/toramky/automobile-dataset) — the course's cleaned copy (`curb_weight`, no `?`) | `datasets/automobile-dataset/` | `autos.csv` (193 rows, 25 cols, 24 KB); `Automobile_data.csv` (205 rows, 24 KB) is the raw UCI original, left over from the first run of lesson 2 and no longer read |
+| Lesson 3 | [US Accidents (2016–2023)](https://www.kaggle.com/datasets/sobhanmoosavi/us-accidents) — the 100k-row course sample | `datasets/us-accidents/` | `accidents.csv` (100,000 rows, 29 cols, 20 MB) |
+| Lesson 3 | [IBM Watson Marketing Customer Value Data](https://www.kaggle.com/datasets/pankajjsh06/ibm-watson-marketing-customer-value-data) | `datasets/ibm-watson-marketing-customer-value-data/` | `customer.csv` (9,134 rows, 25 cols, 1.6 MB) |
 
 Every input CSV under `datasets/` is gitignored — datasets are downloaded from Kaggle, never committed. These notebooks write no CSVs of their own, so `feature-engineering/` needs no extra `.gitignore` entry.
 
-Two gotchas the notebooks work around: the concrete file's column is spelled `fine_aggregate ` (trailing space — quote it exactly), and `Automobile_data.csv` stores `?` for missing values plus `num-of-doors`/`num-of-cylinders` as words (`"four"`), so it gets `.map()`-ed to numbers and `pd.to_numeric(errors="coerce")` before anything else.
+Gotchas the notebooks work around: lesson 1 reads the raw concrete file, whose column is spelled `fine_aggregate ` (trailing space — quote it exactly), while lesson 3 reads the cleaned `concrete.csv` where the same column is `FineAggregate`. Same story for cars — `Automobile_data.csv` stores `?` for missing values and `num-of-doors` as words (`"four"`), which is why the original run of lesson 2 needed the `.map()` / `pd.to_numeric(errors="coerce")` block; that block is now commented out because the notebooks switched to the course's clean `autos.csv`.
 
 ## Running the notebooks
 
@@ -50,11 +56,12 @@ Notebooks read their CSVs from `../datasets/`, one level up from the notebook.
 | Package | Used by |
 | --- | --- |
 | `pandas` | every notebook |
-| `numpy` | lesson 2 (`np.nan` in the word→number map), exercise (`np.arange` for bar positions) |
-| `matplotlib`, `seaborn` | lesson 2 & exercise — `sns.set_theme`, `catplot`/`relplot`/`lmplot`, `plot_mi_scores` |
-| `scikit-learn` | lesson 1 (`RandomForestRegressor`, `cross_val_score`), lesson 2 + exercise (`mutual_info_regression`) |
+| `numpy` | lessons 2 & 3 (`np.log1p`, `np.pi` for displacement), exercises (`np.arange` for bar positions) |
+| `matplotlib`, `seaborn` | lessons 2–3 & exercises — `sns.set_theme`, `catplot`/`relplot`/`lmplot`, `kdeplot`, `plot_mi_scores` |
+| `scikit-learn` | lessons 1–2, exercises 2–3 (`RandomForestRegressor`, `cross_val_score`, `mutual_info_regression`) |
+| `xgboost` | exercise 3 — `XGBRegressor` inside `score_dataset` |
 
-Installed in the repo venv: Python 3.14.8, pandas 3.0.6, numpy 2.5.3, matplotlib 3.11.2, seaborn 0.13.2, scikit-learn 1.9.1.
+Installed in the repo venv: Python 3.14.8, pandas 3.0.6, numpy 2.5.3, matplotlib 3.11.2, seaborn 0.13.2, scikit-learn 1.9.1, xgboost 3.4.1.
 
 ## Concepts covered
 
@@ -74,6 +81,16 @@ Installed in the repo venv: Python 3.14.8, pandas 3.0.6, numpy 2.5.3, matplotlib
 - Scores are non-negative and unbounded; sort descending and plot with `plt.barh` (`plot_mi_scores`) — the *ranking* is what you read, not the raw number
 - **Interaction effects**: a low overall MI score can hide a useful feature. `BldgType` barely separates `SalePrice` on its own, but its trend lines against `GrLivArea` differ sharply per category — knowing `BldgType` changes how `GrLivArea` relates to the target, so keep it. The same test against `MoSold` shows nearly identical lines → no interaction
 - MI is a filter for *where to look*, not a model: scores are noisy estimates, are not comparable across different targets, and high-cardinality categoricals can score well just by being many-valued
+
+### 3. Creating Features
+
+- **Ratios and physics**: `stroke_ratio = stroke / bore` and `displacement = π × (bore/2)² × stroke × num_of_cylinders` — combine existing columns into a quantity the domain actually cares about instead of leaving the model to find it
+- **Reshape a skewed distribution**: `accidents["LogWindSpeed"] = accidents.WindSpeed.apply(np.log1p)`; compare the two `kdeplot`s — the long right tail collapses toward symmetric, which is what most models want
+- **Count features**: `df[roadway_flags].sum(axis=1)` counts how many of 12 booleans are true (`RoadwayFeatures`), `concrete[components].gt(0).sum(axis=1)` counts how many ingredients are present (`Components`) — `.sum()` works on booleans because they're 1/0
+- **Break a categorical apart**: `customer["Policy"].str.split(" ", expand=True)` yields `Type`/`Level` columns; `MSSubClass.str.split("_", n=1)` keeps only the broad class. **Combine them**: `make + "_" + body_style` gives `make_and_style`
+- **Grouped transforms**: `groupby("State")["Income"].transform("mean")` broadcasts each state's mean back onto its own rows (`AverageIncome`); `transform("count") / total` gives a category's population share (`StateFreq`). `transform`, not `agg` — `agg` would collapse the frame to one row per group
+- **Leakage rule**: fit a grouped statistic on the *training* split only, then bring it to validation with `merge` — the `AverageClaim` cell splits with `sample(frac=0.5)`, computes the mean per `Coverage` on `df_train`, and left-joins it onto `df_valid`. Computing it on all rows first would leak the validation targets into the features
+- New features earn their place by scoring better — that's what exercise 3 measures
 
 ## Results
 
@@ -99,10 +116,17 @@ Exercise 2, top 10 MI scores for `SalePrice` over the 78 Ames features:
 | `BsmtQual` | 0.365 | quality |
 | `KitchenQual` | 0.326 | quality |
 
-The bottom of the ranking — `MoSold`, `LandSlope`, `Threeseasonporch`, `BsmtFinSF2` all at 0.000 — is mostly rare or exceptional conditions that don't describe an average home. Lesson 2's Automobile run ranks `curb-weight` (1.468) and `horsepower` (0.847) far above everything else, with `num-of-doors` at 0.000.
+The bottom of the ranking — `MoSold`, `LandSlope`, `Threeseasonporch`, `BsmtFinSF2` all at 0.000 — is mostly rare or exceptional conditions that don't describe an average home. Lesson 2's Automobile run on `autos.csv` ranks `curb_weight` (1.517) and `highway_mpg` (0.953) far above the rest, then `length` (0.610), `fuel_system` (0.483) and `stroke` (0.380); `fuel_type` sits at 0.047 and the label-encoded `num_of_doors` at 0.000.
+
+Exercise 3, 5-fold CV √RMSLE with `XGBRegressor` on Ames:
+
+| Feature set | √RMSLE |
+| --- | --- |
+| Original 78 features | 0.1426 |
+| + `LivLotRatio`, `Spaciousness`, `TotalOutsideSF`, `BldgType`×`GrLivArea`, `PorchTypes`, `MSClass`, `MedNhbdArea` | 0.1396 |
 
 ## Next
 
 Course: [kaggle.com/learn/feature-engineering](https://www.kaggle.com/learn/feature-engineering) — discussion forum [here](https://www.kaggle.com/learn/feature-engineering/discussion).
 
-Four courses now done: `pandas-learn/` (6 sections), `datacleaning-learn/` (5 sections), `intro-machine-learning/` (7 sections), and this one (2 of 6 sections). Next here is **Creating Features** — the lesson this exercise explicitly hands off to — then Clustering With K-Means, PCA, and Target Encoding, which close out with a submission to the House Prices competition.
+Four courses now done: `pandas-learn/` (6 sections), `datacleaning-learn/` (5 sections), `intro-machine-learning/` (7 sections), and this one (3 of 6 sections). Next here is **Clustering With K-Means**, then Principal Component Analysis and Target Encoding, which close out with the bonus **Feature Engineering for House Prices** notebook — a full submission to the competition. Lesson 1's exercise is still outstanding if you want the course fully ticked off.
